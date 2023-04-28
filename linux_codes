@@ -1,0 +1,902 @@
+grep:
+-----
+To search/find the string/word/pattern.
+
+# grep "word/string/pattern" file
+OR
+# cat file | grep "string"
+
+--------------------------
+Multi String/word/pattern:
+``````
+# grep "a\|b" file.txt
+
+Only Extract/Match:
+````
+# grep -o "a" file.txt
+
+Case-insensitive:
+``
+# grep -i "a" file.txt
+
+
+Metachar: ^ $
+```
+^ : Start of line
+
+# grep "^a" file.txt
+
+$ : End of line
+
+# grep "a$" file.txt
+
+. : Anything char/special chars/num
+
+# grep "p.." file.txt
+Invert Search:
+``
+select non-matching lines
+
+# grep -v "a" file.txt
+
+Before Match
+`
+# grep -B 1 "string" file.txt
+
+After Match
+```
+# grep -A 1 "string" file.txt
+Pattern/RegEx
+``
+\ 		:	escape next metachar
+. 		:	match to any char(except \n)
++ 		:	match to one or more chars
+* 		:	match to zero or more chars
+? 		:	match to one or zero chars
+^ 		:	match the beginning of line
+$ 		:	match end of line
+| 		:	Alternation (or)
+[]		:	Bracketed char class [0-9a-zA-Z]
+{n}		:	Match exactly n times
+{n,}		:	Match at least n times
+{n,m}	: Match at least n but not more than m times
+
+
+# grep "[0-9]" file.txt
+# grep "[A-Z]" file.txt
+# grep "[0-9A-Z]" file.txt
+# grep "[0-9a-zA-Z]" file.txt
+# grep "[0-9]$" file.txt
+# grep -E "[0-9]{3}$" file.txt 
+# grep -E "[0-9]{3,}$" file.txt 
+# grep -E "[0-9]{3}$" file.txt 
+# grep -E "[0-9]{4,}$" file.txt 
+# grep -E "[0-9]{0,3}$" file.txt 
+
+
+ip addr | egrep -o "[0-9a-z]{2}:[0-9a-z]{2}:[0-9a-z]{2}:[0-9a-z]{2}:[0-9a-z]{2}:[0-9a-z]{2}"
+
+
+
+
+
+
+
+
+
+day 2
+
+
+
+- Backup & Restore:
+```
+Backup: [tarball] [.tar]
+
+Syntax:
+``
+# tar -attributes <new_backup_file>.tar <path_of_original_data>
+
+a) Create
+`
+# tar -cvf natasha_backup.tar /home/natasha 
+
+-c : Create
+-v : verbose
+-f : forcefully
+
+b) View
+``````
+# tar -tvf natasha_backup.tar
+
+-t : Tree view
+
+c) Extract
+
+# tar -xvf natasha_backup.tar [Extract the data in CWD]
+
+-x : Extract
+
+# tar -xvf natasha_backup.tar -C /data
+
+-C : Create [Extract data in specific location]
+
+
+day 3
+
+
+
+
+[tarball + Gunzip]:[.tgz]
+-------------------
+a) Create:
+# tar -czvf natasha_backup.tgz /home/natasha 
+
+b) View:
+# tar -tzvf natasha_backup.tgz
+
+c)extract
+# tar -xzvf natasha_backup.tgz
+# tar -xzvf natasha_backup.tgz -C /data
+=========================================================
+
+
+
+sort:
+-----
+
+# cat file | sort
+# cat lol | sort -u
+=============================================================
+
+# cat lol | sort -u --version-sort
+[17:54, 4/15/2023] +91 98343 05085: Basic Users & group management:
+-------------------------------
+
+1) Super User
+2) Normal User
+
+
+=> user related information stored into: 
+
+# cat /etc/passwd
+
+user:x:1000:1000:COMMENT:/home/user:/bin/bash
+name | UID  GID   					 Home Dir  Shell
+      \_ Password required 
+
+
+UID (0-60000)		|	GID (0-60000)
+----------------------------------------------------
+0-999 [Super User]	|	0-999 [Super group]
+1000+ [Normal User]	|	1000+ [normal Group]
+-----------------------------------------------------
+
+=> user password related information stored into: 
+
+# cat /etc/shadow
+user:Encrypted Password:Acc. Age
+
+SHA512 + Salt Algo
+
+# chage -l username
+
+Groups:
+-------
+
+=> Group related information stored into: 
+
+# cat /etc/group
+
+grp:x:GID
+
+=> Group password related informatio…
+[17:54, 4/15/2023] +91 98343 05085: Membership:
+-----------
+
+a) Primary Membership
+---------------------
+- add a user as primary member of a group
+# groupadd grp1
+# useradd -g grp1 u1
+
+-g : Primary Membership
+
+b) Secondary Membership
+
+- add a user as secondary member of a group
+# groupadd grp2
+
+# useradd -G grp2 u2
+
+-G : Secondary Membership
+
+- add existing user as a secondary member of a group
+
+# usermod -G grp2 natasha
+
+
+e.g: 
+
+# useradd -G grp u1
+# useradd -G grp u2
+======================================
+# vim filename
+
+
+Command Line Mode:
+------------------
+i	: To goto the insert mode.
+Esc	: Return to command line mde.
+o	: Jump to next line & take you to insert mode.
+O	: Go to insert mode by adjusting the current line to next line.
+yy 	: To copy [yanked] the current line.
+p	: Paste
+nyy	: n = 1,2,3,4...n Copy `n` number of lines.
+dd	: Cut OR Delete the current line.
+ndd	: n = 1,2,3,4...n Cut/Delete `n` number of lines.
+G : To goto end of file
+u	 : Undo
+^r : Redo
+
+
+
+
+Last line Actions:
+------------------
+:set nu	: Set number of line.
+:set nonu: remove number of line.
+:line	: take you to specific line number
+:%s/original_word/new_word : Replace word
+/word : Search word
+:w	: Write/Save
+:q	: Quit
+:wq	: Write & Quit
+:w!	: Write/Save Forcefully
+:q!	: Quit Forcefully
+:wq!	: Write & Quit Forcefully
+
+
+
+
+
+
+
+
+
+Process Management:
+````
+Process:
+``
+- Any running program is a process
+- Multiple instances of the same program are processes.
+- Shell is also a process
+
+
+Process ID (PID)
+````
+- Each linux process is identified by unique id PID 
+- Every process has a Parent Process ID (PPID)
+	+ Except "init"
+Create a Process:
+``
+Terminal#1
+``
+# sleep 100
+
+Terminal#2
+``
+# ps -la		[ Show the processes with PID & PPID ]
+
+Process States:
+```
+- The process is built and executing , so now...
+- We enter the Process State Machine
+
+
+
+
+
+
+
+
+Managing Processes:
+`````
+- Linux kernel tracks what each process is doing
+- Process is assigned a priority
+- Address space assigned to the process
+- Files is the process allowed to access
+- Is the process a ?:-
+	+ Parent
+	+ Child
+	+ Zombie
+
+=> Sometimes the parent dies first
+````
+- If the parent just exits or dies, the child process is left running
+- The child's PPID is no longer valid due to parent is gone.
+- Linux calls these children processes "Zombies"
+- In Linux a zombie is just a process in which the children are adopted by the "init" process
+- The init process will eventually cleanup the zombie childrens
+
+PPID[kill]
+	\___________PID[kill]
+
+PPID[die]
+	\___________PID[zombie]
+
+
+Process Termination:
+``
+
+- When a parent forks a child, they can finish in any order( parent first or child first)
+- Sometimes the parent process could encounter and error and die
+- Sometimes the parent process will just wait around until the child processes all complete brfore exiting
+	+ it calls a wait() command
+- There are variety of wait command.
+
+
+process manager: 
+````
+ps, top, htop
+`````
+# top
+
+press 'q' to exit
+
+
+# sleep 10 &
+
+# ps 		[ PID - Process ID]
+# ps -l 	[ Show the PPID - Parent PID ]
+# ps -e		[ All the processes ]
+
+# ps -la
+
+Kill:
+-----
+# kill PID
+OR
+# kill -9 PID
+
+-9 : Forcefully
+
+# pkill sleep
+
+# killall sleep
+--------------------
+
+
+# sleep 10000 &
+# sleep 20000 &
+
+
+
+
+Check backgroup process:
+
+# jobs
+[1]-  Running                 sleep 10000 &
+[2]+  Running                 sleep 20000 &
+
+-  : Second last added in jobs
++  : last added in jobs
+
+# jobs -l	[ with PID ]
+[1]-   971 Running                 sleep 10000 &
+[2]+   972 Running                 sleep 20000 &
+
+
+# fg %2
+
+ctrl+z [stop]
+
+# bg %2 [ To start in BG ]
+
+
+
+
+
+
+UMASK octal values:
+```````
+022
+File: 
+666 - 022 = 644
+
+Dir
+777 - 022 = 755
+
+# umask 0000
+
+
+
+
+
+Shell Scripting:
+----------------To run multiple objects[binary/commands] using a single object[file].
+
+.sh || .bash 
+
+# vim runme.sh
+
+#!/bin/bash	 [env declaration]SHEBANG
+cmd1
+cmd2
+cmd3
+
+:wq [Save & Quit]
+
+# chmod u+x runme.sh
+# ./runme.sh
+
+OR
+
+# bash runme.sh
+
+
+==> Debug:
+----------
+
+# bash -x runme.sh
+
+
+~~~~~~~~~~~
+Variable:
+---------
+#!/bin/bash
+target=example.com
+
+echo "My target for today is: $target"
+-----------
+#!/bin/bash
+read -p "Enter the target: " target
+echo "My target for today is: $target"
+-----------
+#!/bin/bash
+target=$(whoami)
+echo "My user for today is: $target"
+-----------
+Arithmetic
+~~~~~
+x=10
+y=2
+echo $(($x + $y))
+--------
+read -p "Enter first: " x
+read -p "Enter second: " y
+echo $(($x + $y))
+--------
+#!/bin/bash
+expr 2 + 2
+expr 2 - 2
+expr 2 / 2
+expr 2 \* 2
+===============================
+Conditions:
+``
+1) if...then...fi
+``
+#!/bin/bash
+read -p "Enter: " a
+
+if [[ $a == "0" ]];then
+	echo "Ch mayla"
+fi
+
+
+
+
+2) if...then...else...fi
+````
+#!/bin/bash
+read -p "Enter: " a
+
+if [[ $a == "0" ]];then
+	echo "Ch mayla"
+else
+	echo "Tumse na ho payega"
+fi
+
+
+
+3) if...then...elif...then...fi
+``````
+#!/bin/bash
+read -p "Enter: " a
+
+if [[ $a == "0" ]];then
+	echo "WoW"
+elif [[ $a == "1" ]];then
+	echo "Kidding"
+fi
+
+
+
+
+4) if...then...elif...then...else...fi
+``````
+#!/bin/bash
+read -p "Enter: " a
+
+if [[ $a == "0" ]];then
+	echo "WoW"
+elif [[ $a == "1" ]];then
+	echo "Kidding"
+else 
+	echo "Don't take it lightly"
+fi
+
+1) Relational Operator:
+`````
+Numeric comparisons: ==, !=, <, <=, >, >=, =, !
+String Comparisons: -eq, -ne, -lt, -le, -gt, -ge
+
+[[ STRING == STRING ]]	Equal
+[[ STRING != STRING ]]	Not Equal
+[[ NUM -eq NUM ]]		Equal
+[[ NUM -ne NUM ]]		Not equal
+[[ NUM -lt NUM ]]		Less than
+[[ NUM -le NUM ]]		Less than or equal
+[[ NUM -gt NUM ]]		Greater than
+[[ NUM -ge NUM ]]		Greater than or equal
+[[ STRING =~ STRING ]]	Match Regexp
+[[ STRING !~ STRING ]]	Not-Match Regexp
+
+File Ops:
+
+[[ -e FILE ]]	Exists
+[[ -r FILE ]]	Readable
+[[ -w FILE ]]	Writable
+[[ -x FILE ]]	Executable
+[[ -f FILE ]]	File
+[[ -d FILE ]]	Directory
+[[ -z STRING ]]	Empty string
+[[ -n STRING ]]	Not empty string
+
+2) Logical Operators:
+```````
+||, &&, !
+
+[[ $a == "0" && $b == "1" ]]
+[[ $a == "0" ]] && [[ $b == "1" ]]
+
+[[ $a == "0" || $b == "1" ]]
+[[ $a == "0" ]] || [[ $b == "1" ]]
+
+[[ ! -z $VAR ]] : Not Empty
+
+
+
+
+
+
+
+
+
+
+[12:46, 4/18/2023] +91 98343 05085: #!/bin/bash
+function main(){
+while read sub;do
+    if host "$sub.$target" &> /dev/null;then
+        echo "$sub.$target : Alive"
+    fi
+done < subs.txt
+}
+function help(){
+    echo "-d DOMAIN: Provide domain"
+    echo "-h : Print help"
+}
+case $1 in
+    -d)
+        target=$2
+        ;;
+    -h)
+        help
+        exit
+        ;;
+    *)
+        echo "Error: $1 invalid arg, use -h for help"
+        exit 127
+        ;;
+esac
+
+if [[ -z $target ]];then
+    echo "Error: Domain required, use help"
+    exit 127
+fi
+main
+[13:25, 4/18/2023] +91 98343 05085: #!/bin/bash
+
+while true;do
+
+echo "++++++++++++++ MENU ++++++++++++++"
+echo "1. Make a file."
+echo "2. Display contents."
+echo "3. Copy the file."
+echo "4. Rename the file."
+echo "5. Delete the file."
+echo "6. Exit."
+
+read -p "Enter the Choice:" choice
+
+if [[ $choice == 1 ]]; then
+	read -p "Enter Filename: " fname
+	if [[ -e $fname ]]; then
+		echo "File already exists..."
+	else
+		read -p "Enter content: " content
+		echo "$content">$fname
+	fi
+fi
+
+if [[ $choice == 2 ]]; then
+	read -p "Enter Filename: " fname
+	if [[ -e $fname ]]; then
+		cat $fname
+	else
+		echo "File Does not Exist...!!!"
+	fi
+fi
+
+if [[ $choice == 3 ]]; then
+	read -p "Enter Source Filename: " sfname
+	if [[ -e $sfname ]] && [[ -r $sfname ]]; then
+		read -p "Enter Target Filename: " tfname
+		if [[  -e $tfname ]]; then
+			cp $sfname $tfname
+		else
+			echo "Target File Does not Exist..."
+		fi
+	else
+		echo "Source File Does not Exist..."
+	fi
+
+fi
+
+
+
+if [[ $choice == 4 ]]; then
+	read -p "Enter Source Filename: " sfname
+	if [[ -e $sfname ]] && [[ -r $sfname ]]; then
+		read -p "Enter Target Filename: " tfname
+		mv $sfname $tfname
+	else
+		echo "Source File Does not Exist..."
+	fi
+fi
+
+
+
+if [[ $choice == 5 ]]; then
+	read -p "Enter Source Filename: " sfname
+	if [[ -e $sfname ]] && [[ -w $sfname ]]; then
+		read -p "Please Give Confirmation...Y/N" confirm
+		if [[ $confirm == Y ]]; then
+			rm $sfname
+		else
+			echo "File retained..."
+		fi
+	else
+		echo "Source File Does not Exist..."
+	fi
+fi
+
+
+if [[ $choice == 6 ]]; then
+	exit
+fi
+done
+[15:35, 4/18/2023] +91 98343 05085: #!/bin/bash
+function main(){
+while read sub;do
+    if host "$sub.$target" &> /dev/null;then
+        echo "$sub.$target : Alive"
+    fi
+done < $wordlist
+}
+function help(){
+    echo "-d DOMAIN: Provide domain"
+    echo "-h : Print help"
+}
+while true;do
+    case $1 in
+        -d)
+            target=$2
+            shift
+            ;;
+        -f)
+            wordlist=$2
+            shift
+            break
+            ;;
+        "-h"|"--help")
+            help
+            exit ;;
+        *)  echo "Error: $1 invalid arg, use -h for help"
+        exit 127
+        ;;
+    esac
+shift
+done
+if [[ -z $target ]];then
+    echo "Error: Domain required, use help"
+    exit 127
+fi
+if [[ -z $wordlist ]];then
+    echo "Error: Wordlist required, use help"
+    exit 127
+fi
+main
+
+
+
+
+
+
+
+#!/bin/bash
+function main(){
+while read sub;do
+    if host "$sub.$target" &> /dev/null;then
+        echo "$sub.$target : Alive"
+    fi
+done < $wordlist
+}
+function help(){
+    echo "-d DOMAIN: Provide domain"
+    echo "-h : Print help"
+}
+while true;do
+    case $1 in
+        -d)
+            target=$2
+            if [[ -z $target ]];then
+                echo "Error: Domain required, use help"
+                exit 127
+            fi
+            shift
+            ;;
+        -f)
+            wordlist=$2
+            if [[ -z $wordlist ]];then
+                echo "Error: Wordlist required, use help"
+                exit 127
+            fi
+            shift
+            break
+            ;;
+        "-h"|"--help")
+            help
+            exit ;;
+        *)  echo "Error: $1 invalid arg, use -h for help"
+        exit 127
+        ;;
+    esac
+shift
+done
+main
+
+
+
+
+
+
+
+
+
+Package manager:
+````[ubuntu : Debian] .deb
+apt
+
+UPDATE:
+``
+# apt update
+
+UPGRADE:
+``
+# apt upgrade -y
+
+DIST UPGRADE:
+``
+# lsb_release -a [Check]
+# apt dist-upgrade -y
+
+SEARCH:
+`
+# apt search package_name
+
+INSTALL:
+```
+# apt install vlc -y
+
+REMOVE:
+`
+# apt remove vlc
+# apt autoremove vlc
+--------
+# apt autoremove
+
+
+Remote management:
+````
+SSH: Secure Shell
+```
+To access the remote machine on CLI
+
+Server Side
+``
+Package: openssh-server
+Port: 22
+Service: ssh
+
+1) Install
+``
+# apt install openssh-server -y
+
+2) Service:
+``
+systemctl: To manage the linux services, like: start, stop, restart, reload, status
+
+# systemctl status ssh
+
+Check:
+`
+# lsof -i:22
+
+Client Side
+-----------
+# apt install openssh-client -y
+
+Access:
+``
+# ssh user@serverIP
+
+# ssh x.x.x.x [ Access root on remote server]
+
+# ssh x.x.x.x cmd
+------------------------------------------
+vsFTP [ Very Secure FTP]
+`````
+On Server
+```
+Package: vsftpd
+port: 21
+Service: vsftpd 
+
+1) # apt install vsftpd -y
+
+2) # vim /etc/vsftpd.conf
+anonymous_enable=NO
+				to
+anonymous_enable=YES
+
+local_enable=YES
+				to
+local_enable=NO
+
+:wq [save & quit]
+
+# systemctl restart vsftpd
+		# lsof -i:21
+
+3) # cd /srv/ftp
+		# touch file{1..5}.txt
+
+On Client:`
+````
+# apt install ftp -y
+
+# ftp x.x.x.x
+Connected to 192.168.206.150.
+220 (vsFTPd 3.0.5)
+Name (192.168.206.150:root): ftp
+331 Please specify the password.
+Password:
+230 Login successful
+
+
+ftp> ls
+ftp> get file1.txt [ to download file ]
+ftp> mget dir [ To download a dir ]
+ftp> put file [ to upload if allowed ]
+ftp> mput dir [ to upload dir if allowed ]
